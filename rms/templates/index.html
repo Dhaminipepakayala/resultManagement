@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form method="POST" action="/search">
+    <input type="search" name="regd_no" id="regd_no" placeholder="enter your registeration number">
+   <br/> <input type="text" name="sem" id="sem">
+    <input type="submit" value="submit">
+</form>
+<h3>For Faculty <a href="/admin">login here</a></h3>
+{% if obj1 %} 
+{% if obj %}
+<h2>Registration Number:{{obj1[0][0]}}</h2>
+<h2>Student Name:{{obj1[0][1]}}</h2>
+<h2>Department of {{obj1[0][2]}}</h2>
+<h2>Examination : {{ obj[0][0] }}</h2>
+<table>
+    <tr>
+        <th>S.NO</th>
+        <th>Course Title</th>
+        <th>Grade Secured</th>
+        <th>Status</th>
+        <th>Credits</th>
+    </tr>
+    {% for i in obj %} 
+    <tr>
+    <td>{{loop.index}}</td>
+       <td>{{i[1]}}</td>
+       <td>{{i[3]}}</td>
+       <td></td>
+       {% if i[2] > 30 %}
+       <td>P</td>
+       {%else%}
+       <td>F</td>
+       {%endif%}
+       <td>{{i[4]}}</td>
+
+    </tr>
+
+    {% endfor %}
+</table>
+{% if gpa %}
+<h2>GPA obtained:{{ gpa }}</h2>
+{% endif %}
+{%endif%}
+{% endif %}
+</body>
+</html>

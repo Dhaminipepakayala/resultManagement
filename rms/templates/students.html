@@ -1,0 +1,68 @@
+{% extends 'admin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="addstudent('student')">Add New student</button>
+    <div id="student"></div>
+
+    <table border="1">
+        <tr>
+            <th>regestration ID</th>
+            <th>Name</th>
+            <th>email</th>
+            <th>batch</th>
+            <th>department</th>
+        </tr>
+        {% if obj %}
+            {% for i in obj %}
+                <tr>
+                    <td>{{ i[0] }}</td>
+                    <td>{{ i[1] }}</td>
+                    <td>{{ i[2] }}</td>
+                    <td>{{ i[3] }}</td>
+                    <td>{{ i[4] }}</td>
+                    <td><a href="#" onclick="editstud('{{ i[0] }}','{{ i[1] }}','{{ i[2] }}','{{ i[3] }}','{{ i[4] }}')">Edit</a></td>
+                    <td><a href="/delstudent/{{ i[0] }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    <script>
+        function addstudent(id){
+            document.getElementById(id).innerHTML = `
+            <form action="/students" method="post">
+                regd ID: <input type="text" name="sid" id="sid"><br/>
+                name: <input type="text" name="name" id="name"><br/>
+                email: <input type="text" name="email" id="email"><br/>
+                batch: <input type="text" name="batch" id="batch"><br/>
+                department: <input type="text" name="department" id="department"><br/>
+
+                <input type="submit" value="Submit">
+            </form>
+        `;
+    }
+function editstud(id,id1,id2,id3,id4){
+  
+    document.getElementById('student').innerHTML = `
+    <h1>Edit student </h1>
+    <form action="/editstudent/${id }" method="post">
+        name: <input type="text" name="name" id="name" value="${ id1 }" ><br/>
+        email: <input type="text" name="email" id="email" value='${ id2 }'><br/>
+        batch: <input type="text" name="batch" id="batch" value='${ id3 }'><br/>
+        department: <input type="text" name="department" id="department" value='${ id4 }'><br/>
+        <input type="submit" value="Submit">
+    </form>
+`;
+}
+</script>
+    
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'admin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="results" method="post">
+        <input type="text" name="batch" id="batch">
+        <input type="text" name="dept" id="dept">
+        <input type="text" name="exam_id" id="exam_id">
+        <input type="submit" value="submit"> 
+    </form>
+    <table>
+    
+        {% if obj1 %} 
+        <tr>
+            <th>registration no</th>
+            <th>student name</th>
+            <th>marks</th>
+            <th>grade</th>
+            <th>  </th>
+        </tr>
+    {% for i in obj1 %} 
+    <tr>
+    <td>{{ i[0] }}</td>
+    <td> {{ i[1] }} </td>
+   <form action="/results/{{i[0]}}" method="POST">
+    
+    <input type="hidden" name="exam_id" value={{ exam_id }}>
+    <td><input type="text" name="marks" id="marks" value={{ i[2] }}></td>
+    <td><input type="text" name="grade" id="grade" value={{ i[3] }}></td>
+    <td><input type="submit" value="ok"></td>
+    </form> 
+</tr>
+    {% endfor %}
+    {% endif %}
+</table>
+<script>
+    function callfun(id){
+        document.getElementBYID(id).innerHTML=`
+        <a href='#'>edit</a>
+        <a href='#'>delete</a>
+        `;
+    }
+</script>
+</body>
+</html>
+{% endblock %}

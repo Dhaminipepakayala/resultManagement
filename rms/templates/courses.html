@@ -1,0 +1,60 @@
+{% extends 'admin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="body">
+    <button onclick="addcourse('course')">Add New course</button>
+    <div id="course"></div>
+
+    <table border="1">
+        <tr>
+            <th>Course ID</th>
+            <th>Title</th>
+            <th>department</th>
+            
+        </tr>
+        {% if obj %}
+            {% for i in obj %}
+                <tr>
+                    <td>{{ i[0] }}</td>
+                    <td>{{ i[1] }}</td>
+                    <td>{{ i[2] }}</td>
+                    <td><a href="#" onclick="editcourse('{{ i[0] }}','{{ i[1] }}','{{ i[2] }}')">Edit</a></td>
+                    <td><a href="/delcourse/{{ i[0] }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    <script>
+        function addcourse(id){
+            document.getElementById(id).innerHTML = `
+            <form action="/courses" method="post">
+                Title: <input type="text" name="title" id="title"><br/>
+                department: <input type="text" name="dept" id="dept"><br/>
+                <input type="submit" value="Submit">
+            </form>
+        `;
+    }
+function editcourse(id,id1,id2){
+  
+    document.getElementById('course').innerHTML = `
+    <h1>Edit course </h1>
+    <form action="/editcourse/${id }" method="post">
+        Course ID: <input type="text" name="course_id" id="course_id" value="${ id }" ><br/>
+        Title: <input type="text" name="title" id="title" value='${ id1 }'><br/>
+        Department: <input type="text" name="dept" id="dept" value='${ id2 }'><br/>
+        <input type="submit" value="Submit">
+    </form>
+`;
+}
+</script>
+    
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'admin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="body">
+    <button onclick="addexam('exam')">Add New Exam</button>
+    <div id="exam"></div>
+
+    <table border="1">
+        <tr>
+            <th>Exam ID</th>
+            <th>Sub code</th>
+
+            <th>Title</th>
+            <th>Date</th>
+        </tr>
+        {% if obj %}
+            {% for i in obj %}
+                <tr>
+                    <td>{{ i[0] }}</td>
+                    <td>{{ i[1] }}</td>
+                    <td>{{ i[2] }}</td>
+                    <td>{{ i[3] }}</td>
+                    <td><a href="#" onclick="editexam('{{ i[0] }}','{{ i[1] }}','{{ i[2] }}','{{ i[3] }}','{{ i[4] }}')">Edit</a></td>
+                    <td><a href="/delexam/{{ i[0] }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    <script>
+        function addexam(id){
+            document.getElementById(id).innerHTML = `
+            <form action="/exams" method="post">
+                sub code: <input type="text" name="subcode" id="subcode"><br/>
+                Title: <input type="text" name="title" id="title"><br/>
+                date: <input type="date" name="date" id="date"><br/>
+                <input type="submit" value="Submit">
+            </form>
+        `;
+    }
+function editexam(id,id1,id2,id3){
+  
+    document.getElementById('exam').innerHTML = `
+    <h1>Edit subject </h1>
+    <form action="/editexam/${id }" method="post">
+        Sub code: <input type="text" name="subcode" id="subcode" value='${ id1 }'><br/>
+        Title: <input type="text" name="title" id="title" value='${ id2 }'><br/>
+        Date: <input type="date" name="date" id="date" value='${ id3 }'><br/>
+        <input type="submit" value="Submit">
+    </form>
+`;
+}
+</script>
+    
+</body>
+
+</html>
+{% endblock %}
